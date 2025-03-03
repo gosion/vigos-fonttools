@@ -9,7 +9,7 @@ public class TableDirectory : IFontModel
     public uint Checksum { get; set; }
     public uint Offset { get; set; }
     public uint Length { get; set; }
-    public byte[] Content { get; set; } = [];
+    public byte[] Content { get; set; } = Array.Empty<byte>();
     public IFontTable? FontTable { get; set; }
 
     public void Decode(IFontReader reader)

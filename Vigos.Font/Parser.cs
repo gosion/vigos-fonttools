@@ -5,8 +5,8 @@ namespace Vigos.Font;
 
 public class Parser
 {
-    private static readonly string[] _collectionExts = [".ttc", ".otc"];
-    private static readonly string[] _singleExts = [".ttf", ".otf"];
+    private static readonly string[] _collectionExts = new string[] { ".ttc", ".otc" };
+    private static readonly string[] _singleExts = new string[] { ".ttf", ".otf" };
 
     public Dictionary<string, IFontInfo> Parse(string filename)
     {

@@ -22,7 +22,7 @@ public struct UInt24
         var b0 = (byte)((value) & 0xFF);
         var b1 = (byte)((value >> 8) & 0xFF);
         var b2 = (byte)((value >> 16) & 0xFF);
-        return new UInt24([b0, b1, b2]);
+        return new UInt24(new byte[] { b0, b1, b2 });
     }
 
     public UInt32 Value

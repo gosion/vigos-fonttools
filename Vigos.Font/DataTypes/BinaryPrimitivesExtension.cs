@@ -9,6 +9,6 @@ public static class BinaryPrimitivesExtension
         var b0 = source[0];
         var b1 = source[1];
         var b2 = source[2];
-        return new UInt24([b2, b1, b0]);
+        return new UInt24(new byte[] { b2, b1, b0 });
     }
 }

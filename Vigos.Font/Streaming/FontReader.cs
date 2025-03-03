@@ -8,7 +8,7 @@ namespace Vigos.Font.Streaming;
 public class FontReader : IFontReader, IDisposable
 {
     private readonly byte[] _buffer;
-    private readonly Dictionary<string, long> _marks = [];
+    private readonly Dictionary<string, long> _marks = new();
     public Stream Stream { get; private set; }
 
     public FontReader(Stream stream)

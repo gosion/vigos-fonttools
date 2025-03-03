@@ -8,7 +8,7 @@ public class CmapTable : IFontTable
 {
     public ushort Version { get; set; }
     public ushort NumberSubtables { get; set; }
-    public CmapSubTable[] CmapSubTables { get; set; } = [];
+    public CmapSubTable[] CmapSubTables { get; set; } = Array.Empty<CmapSubTable>();
 
     public static CmapTable Parse(IFontReader reader, in TableDirectory tableDirectory)
     {
@@ -232,7 +232,7 @@ public class CmapFormat10 : CmapFormat
     public uint Language { get; set; }
     public uint StartCharCode { get; set; }
     public uint NumChars { get; set; }
-    public ushort[] Glyphs { get; set; } = [];
+    public ushort[] Glyphs { get; set; } = Array.Empty<ushort>();
 
     public static CmapFormat10 Parse(IFontReader reader)
     {
@@ -258,7 +258,7 @@ public class CmapFormat12 : CmapFormat
     public uint Length { get; set; }
     public uint Language { get; set; }
     public uint NGroups { get; set; }
-    public GlyphGroup[] GlyphGroups { get; set; } = [];
+    public GlyphGroup[] GlyphGroups { get; set; } = Array.Empty<GlyphGroup>();
 
     public static CmapFormat12 Parse(IFontReader reader)
     {
@@ -291,7 +291,7 @@ public class CmapFormat13 : CmapFormat
     public uint Length { get; set; }
     public uint Language { get; set; }
     public uint NGroups { get; set; }
-    public GlyphGroup[] GlyphGroups { get; set; } = [];
+    public GlyphGroup[] GlyphGroups { get; set; } = Array.Empty<GlyphGroup>();
 
     public static CmapFormat13 Parse(IFontReader reader)
     {
@@ -340,7 +340,7 @@ public class CmapFormat14 : CmapFormat
     public uint Length { get; set; }
     public uint Language { get; set; }
     public uint NumVarSelectorRecords { get; set; }
-    public VariationSelector[] VariationSelectors { get; set; } = [];
+    public VariationSelector[] VariationSelectors { get; set; } = Array.Empty<VariationSelector>();
 
     public static CmapFormat14 Parse(IFontReader reader)
     {

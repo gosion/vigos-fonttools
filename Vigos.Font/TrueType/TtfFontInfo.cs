@@ -20,7 +20,7 @@ public class TtfFontInfo : IFontInfo
     {
         if (_fontFamilies == null)
         {
-            _fontFamilies = [];
+            _fontFamilies = new Dictionary<string, string>();
             var fontFamilies = GetNameRecrods().Where(nr => (NameIdentifier)nr.NameID == NameIdentifier.FontFamily && nr.Value != null);
 
             foreach (var fm in fontFamilies)
@@ -42,7 +42,7 @@ public class TtfFontInfo : IFontInfo
 
     public TableDirectory[] GetTableDirectories()
     {
-        return [.. _offsetTable.TableDirectories];
+        return _offsetTable.TableDirectories.ToArray();
     }
 
     public CmapTable? GetCmapTable()
@@ -55,7 +55,7 @@ public class TtfFontInfo : IFontInfo
         if (_nameRecords == null)
         {
             var nameTable = _offsetTable.TableDirectories.FirstOrDefault(t => t.Tag == "name")?.FontTable ?? throw new Exception("Name table not found in font");
-            _nameRecords = (nameTable as NameTable)?.NameRecrods ?? [];
+            _nameRecords = (nameTable as NameTable)?.NameRecrods ?? Array.Empty<NameRecrod>();
         }
 
         return _nameRecords;

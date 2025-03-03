@@ -10,7 +10,7 @@ public class NameTable : IFontTable
     public ushort Format { get; set; }
     public ushort Count { get; set; }
     public ushort StringOffset { get; set; }
-    public NameRecrod[] NameRecrods { get; set; } = [];
+    public NameRecrod[] NameRecrods { get; set; } = Array.Empty<NameRecrod>();
     public string Variable { get; set; } = "";
 
     public static NameTable Parse(IFontReader reader, in TableDirectory tableDirectory)

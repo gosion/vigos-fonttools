@@ -9,7 +9,7 @@ public class OffsetSubTable : IFontModel
     public ushort SearchRange { get; set; }
     public ushort EntrySelector { get; set; }
     public ushort RangeShift { get; set; }
-    public IList<TableDirectory> TableDirectories { get; set; } = [];
+    public IList<TableDirectory> TableDirectories { get; set; } = new List<TableDirectory>();
 
     public void Decode(IFontReader reader)
     {
