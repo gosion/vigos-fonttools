@@ -44,25 +44,47 @@ public class TtcParser
         return result;
     }
 
-    public void ToTtf(string filename, string dir)
+    public ParseResult[] ToTtf(string filename, string dir)
     {
-        ToTtf(Parse(filename), dir);
+        return ToTtf(Parse(filename), dir);
     }
 
-    public void ToTtf(Stream stream, string dir)
+    public ParseResult[] ToTtf(Stream stream, string dir)
     {
-        ToTtf(Parse(stream), dir);
+        return ToTtf(Parse(stream), dir);
     }
 
-    private void ToTtf(Dictionary<string, IFontInfo> fonts, string dir)
+    private ParseResult[] ToTtf(Dictionary<string, IFontInfo> fonts, string dir)
     {
+        var result = new List<ParseResult>();
         foreach (var font in fonts)
         {
-            var fs = new FileStream(Path.Combine(dir, $"{font.Key.Replace(" ", "")}.ttf"), FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            var package = Path.Combine(dir, font.Key);
+            if (!Directory.Exists(package))
+            {
+                Directory.CreateDirectory(package);
+            }
+
+            var fontFileName = font.Key.Replace(" ", "");
+            var fontInfo = font.Value;
+            if (fontInfo.IsBold) fontFileName += "-Bold";
+            if (fontInfo.IsItalic) fontFileName += "-Italic";
+            
+            fontFileName += ".ttf";
+            var fs = new FileStream(Path.Combine(package, fontFileName), FileMode.OpenOrCreate, FileAccess.ReadWrite);
             using var writer = FontStreamingFactory.GetFontWriter(fs);
             (font.Value as TtfFontInfo)!.GetOffsetTable().Encode(writer);
             fs.Flush();
             fs.Close();
+            result.Add(new() { FontFamily = font.Key, FontFilePath = fontFileName});
         }
+
+        return result.ToArray();
     }
+}
+
+public class ParseResult
+{
+    public string FontFamily { get; set; } = "";
+    public string FontFilePath { get; set; } = "";
 }

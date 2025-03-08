@@ -44,16 +44,31 @@ public class TtfTest
     public void ShouldConvertToTtfSuccess(TestCase<string, FontNameDescriptor[]> testCase)
     {
         var path = Util.GetFontPath(testCase.Input);
-        new TtcParser().ToTtf(path, Util.GetFontDir());
+        var result = new TtcParser().ToTtf(path, Util.GetFontDir());
         var len = testCase.Expected.Length;
 
         for (var i = 0; i < len; i++)
         {
             var item = testCase.Expected[i];
-            var filename = Util.GetFontPath(item.Filename);
+            Assert.Equal(item.FontName, result[i].FontFamily);
+            Assert.Equal(item.Filename, result[i].FontFilePath);
+            var filename = Util.GetFontPath(Path.Combine(item.FontName, item.Filename));
             Assert.True(File.Exists(filename));
             var ttfInfo = new TtfParser().Parse(filename);
             Assert.Equal(item.FontName, ttfInfo.GetFontFamilies()["en-US"]);
         }
+    }
+    
+    [Theory]
+    [MemberData(nameof(TtfTestCases.CaseForSubFamily), MemberType = typeof(TtfTestCases))]
+    public void ShouldReadSubFontFamiliySuccess(TestCase<string, FontStyle> testCase)
+    {
+        var path = Util.GetFontPath(testCase.Input);
+        var fontInfo = new TtfParser().Parse(path);
+        var subFamily = fontInfo!.GetFontSubFamilies()["en-US"];
+        Assert.Equal(testCase.Expected.Name, subFamily);
+        Assert.Equal(testCase.Expected.IsRegular, fontInfo.IsRegular);
+        Assert.Equal(testCase.Expected.IsBold, fontInfo.IsBold);
+        Assert.Equal(testCase.Expected.IsItalic, fontInfo.IsItalic);
     }
 }

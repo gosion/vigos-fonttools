@@ -71,8 +71,8 @@ public enum NameIdentifier : ushort
 {
     CopyrightNotice = 0,
     FontFamily = 1,
-    FontSubfamily = 2,
-    UniqueSubfamilyId = 3,
+    FontSubFamily = 2,
+    UniqueSubFamilyId = 3,
     FullName = 4,
     NameTableVersion = 5,
     PostScriptName = 6,
